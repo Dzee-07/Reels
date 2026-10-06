@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/reel
+    username: reel_user
+    password: change_me
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  servlet:
+    multipart:
+      max-file-size: 2GB
+      max-request-size: 2GB
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: YOUR_GOOGLE_CLIENT_ID
+            client-secret: YOUR_GOOGLE_CLIENT_SECRET
+            scope: [email, profile]
+          facebook:
+            client-id: YOUR_FACEBOOK_CLIENT_ID
+            client-secret: YOUR_FACEBOOK_CLIENT_SECRET
+            scope: [email, public_profile]
+
+app:
+  jwt:
+    secret: change_this_to_a_long_random_secret_in_env_vars
+    expiration-ms: 86400000
+  admin-seed:
+    # Override both via env vars (ADMIN_SEED_EMAIL / ADMIN_SEED_PASSWORD) rather
+    # than editing this file, especially before this repo ever leaves your machine.
+    email: ${ADMIN_SEED_EMAIL:admin@reel.local}
+    password: ${ADMIN_SEED_PASSWORD:Password07!}
+  storage:
+    video-dir: /data/videos
+    thumbnail-dir: /data/thumbnails
+  cors:
+    allowed-origins: "http://localhost:3000"
